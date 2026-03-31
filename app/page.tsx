@@ -1,8 +1,20 @@
 "use client";
 
-import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-
+import { OrbitControls, shaderMaterial } from "@react-three/drei";
+import { Canvas, extend, ThreeElement } from "@react-three/fiber";
+import vertexShader from "@/shaders/vertex.glsl";
+import fragmentShader from "@/shaders/fragment.glsl";
+const CustomShaderMaterial = shaderMaterial(
+  {},
+  vertexShader,
+  fragmentShader
+);
+extend({CustomShaderMaterial});
+declare module "@react-three/fiber" {
+  interface ThreeElements {
+    customShaderMaterial: ThreeElement<typeof CustomShaderMaterial>;
+  }
+}
 const App = () => {
   return (
     <main className={`w-screen h-screen bg-black text-white`}>
@@ -22,7 +34,7 @@ const App = () => {
 
         <mesh>
           <icosahedronGeometry args={[1,5]}/>
-          <meshStandardMaterial/>
+          <customShaderMaterial key={CustomShaderMaterial.key}/>
         </mesh>
       </Canvas>
     </main>
