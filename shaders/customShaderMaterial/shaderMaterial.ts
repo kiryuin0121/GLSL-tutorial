@@ -1,6 +1,6 @@
 import { shaderMaterial } from "@react-three/drei";
-import vertexShader from "@/shaders/vertex.glsl";
-import fragmentShader from "@/shaders/fragment.glsl";
+import vertexShader from "./vertex.glsl";
+import fragmentShader from "./fragment.glsl";
 import { ThreeElement } from "@react-three/fiber";
 
 export const CustomShaderMaterial = shaderMaterial({}, vertexShader, fragmentShader);

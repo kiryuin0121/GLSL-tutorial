@@ -1,3 +1,4 @@
+varying vec3 vPosition; //in
 void main() {
-  gl_FragColor = vec4(0.5, 0.0, 1.0, 1.0);
+  gl_FragColor = vec4(vPosition, 1.0);
 }
