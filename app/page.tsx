@@ -1,20 +1,11 @@
 "use client";
 
-import { OrbitControls, shaderMaterial } from "@react-three/drei";
-import { Canvas, extend, ThreeElement } from "@react-three/fiber";
-import vertexShader from "@/shaders/vertex.glsl";
-import fragmentShader from "@/shaders/fragment.glsl";
-const CustomShaderMaterial = shaderMaterial(
-  {},
-  vertexShader,
-  fragmentShader
-);
+import { OrbitControls} from "@react-three/drei";
+import { Canvas, extend} from "@react-three/fiber";
+import { CustomShaderMaterial } from "@/shaders/customShaderMaterial/shaderMaterial";
+
 extend({CustomShaderMaterial});
-declare module "@react-three/fiber" {
-  interface ThreeElements {
-    customShaderMaterial: ThreeElement<typeof CustomShaderMaterial>;
-  }
-}
+
 const App = () => {
   return (
     <main className={`w-screen h-screen bg-black text-white`}>
