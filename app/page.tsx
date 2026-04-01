@@ -25,7 +25,10 @@ const App = () => {
 
         <mesh>
           <icosahedronGeometry args={[1,5]}/>
-          <customShaderMaterial key={CustomShaderMaterial.key}/>
+          <customShaderMaterial 
+          key={CustomShaderMaterial.key}
+          uColor={"lightblue"}
+          />
         </mesh>
       </Canvas>
     </main>
