@@ -1,12 +1,13 @@
 "use client";
 
 import { OrbitControls} from "@react-three/drei";
-import { Canvas, extend} from "@react-three/fiber";
-import { CustomShaderMaterial } from "@/shaders/customShaderMaterial/shaderMaterial";
+import { Canvas} from "@react-three/fiber";
+import Mesh from "@/components/Mesh";
 
-extend({CustomShaderMaterial});
+
 
 const App = () => {
+
   return (
     <main className={`w-screen h-screen bg-black text-white`}>
       <Canvas
@@ -23,13 +24,7 @@ const App = () => {
         />
         <OrbitControls/>
 
-        <mesh>
-          <icosahedronGeometry args={[1,5]}/>
-          <customShaderMaterial 
-          key={CustomShaderMaterial.key}
-          uColor={"lightblue"}
-          />
-        </mesh>
+       <Mesh/>
       </Canvas>
     </main>
   )
