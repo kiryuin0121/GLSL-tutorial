@@ -1,55 +1,21 @@
-uniform float uTime; //in
-attribute float aSpeed; //in
-varying vec3 vPosition; //out
+uniform float uTime;
+attribute float aSpeed;
+
+varying vec3 vPosition;
+varying float vSpike;
+
 void main() {
   vPosition = position;
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 【ステップ1】位相オフセットを作る
-  //
-  //   頂点の XYZ 座標を足し込むことで、
-  //   隣どうしの頂点が「別々のタイミング」で飛び出すようになる。
-  //   係数 5.0 を大きくするほど、隣の頂点との位相差が広がり
-  //   よりバラバラ・カオスな動きになる。
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  // トゲる感覚のまばら具合
   float phase = position.x * 10.0
               + position.y * 10.0
               + position.z * 10.0;
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 【ステップ2】sin の「正の山だけ」を取り出す
-  //
-  //   max(0.0, sin(...))
-  //   → sin が負のとき = 0（頂点は元の位置）
-  //   → sin が正のとき = 0.0 〜 1.0（飛び出す候補）
-  //
-  //   これだけでも凹まなくなるが、まだ山がなだらか。
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   float t = max(0.0, sin(uTime * aSpeed + phase));
-
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 【ステップ3】pow() で山を鋭くする ← ここが栗の核心
-  //
-  //   pow(t, n) は t を n 乗する関数。
-  //
-  //   t = 0.5 のとき
-  //     pow(0.5, 1) = 0.50  ← なめらか
-  //     pow(0.5, 3) = 0.125 ← 山の裾が低くなる
-  //     pow(0.5, 5) = 0.031 ← さらに低く（ほぼ 0）
-  //
-  //   t = 1.0（sin が最大）のときだけ pow(...) も 1.0 のまま。
-  //
-  //   つまり: 「頂点のほとんどの時間はフラット、
-  //            sin が頂点に達した瞬間だけ鋭く飛び出す」
-  //   → これが栗のとげのチクチク感！
-  //
-  //   最後の 0.6 は飛び出し量（スパイクの長さ）の調整。
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   float spike = pow(t, 10.0) * 0.9;
 
-  vec3 pos = position + normal * spike;
+  vSpike = spike;
 
+  vec3 pos = position + normal * spike;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
 }
