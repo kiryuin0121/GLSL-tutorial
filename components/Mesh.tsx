@@ -21,7 +21,7 @@ const Mesh = () => {
   });
  
   return (
-    <mesh position={[0,0,0]}>
+    <mesh>
       {/* <icosahedronGeometry args={[1, 5]} /> */}
       <planeGeometry args={[viewport.width, viewport.height,widthSegment,heightSegment]}>
         <bufferAttribute
