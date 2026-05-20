@@ -7,7 +7,8 @@ import { Color } from "three";
 export const CustomShaderMaterial = shaderMaterial({
   uColor:new Color("pink"),
   uTime:0,
-  uMouse:[0,0]
+  uMouse:[0,0],
+  uResolution:[innerWidth,innerHeight]
 }, vertexShader, fragmentShader);
 declare module "@react-three/fiber" {
   interface ThreeElements {

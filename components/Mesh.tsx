@@ -11,13 +11,15 @@ const vertexCount = (widthSegment+1)*(heightSegment+1);//0始まりなので+1
 const mouse = new Vector2();
 const Mesh = () => {
   const materialRef = useRef<InstanceType<typeof CustomShaderMaterial>>(null!);
+  const {viewport,size} = useThree();
   useFrame(({ clock ,pointer}) => {
     materialRef.current.uTime = clock.getElapsedTime();
     mouse.x = (pointer.x + 1) * 0.5;
     mouse.y = (pointer.y + 1) * 0.5;
     materialRef.current.uMouse = [mouse.x,mouse.y];
+    materialRef.current.uResolution = [size.width,size.height];
   });
-  const {viewport} = useThree();
+ 
   return (
     <mesh position={[0,0,0]}>
       {/* <icosahedronGeometry args={[1, 5]} /> */}
